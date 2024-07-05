@@ -7,6 +7,8 @@ namespace GallowsGameInstaller.Pages;
 
 public partial class InstallationPage : ContentPage
 {
+    Label labelProgressBarProcent;
+    ProgressBar progressBar;
     public InstallationPage(string path)
     {
         InitializeComponent();
@@ -19,26 +21,40 @@ public partial class InstallationPage : ContentPage
     public InstallationPage()
     {
         InitializeComponent();
+        NavigationPage.SetHasBackButton(this, false); //убирает дефолтную кнопку возвращения на предыдущую страницу
         ProgressBarInit();
         ExtractAndCopyFiles(@"D:\CSProjects\GallowsGameInstaller\GallowsGameInstaller\ProjectBuildFiles\GallowGame.zip", @"C:\Program Files\GallowGame");
     }
     private void ProgressBarInit()
     {
         // Создайте ProgressBar
-        ProgressBar progressBar = new ProgressBar
+        progressBar = new ProgressBar
         {
             Progress = 0.5, // Установите начальное значение прогресса (0.5 для 50%)
             ProgressColor = Colors.Blue // Установите цвет прогресс-бара (например, синий)
         };
-        Label label = new Label();
-        label.Text = "0%";
-        label.TextColor = Colors.Black;
+        labelProgressBarProcent = new Label();
+        labelProgressBarProcent.Text = "0%";
+        labelProgressBarProcent.TextColor = Colors.Black;
+
+        Grid exitGrid = new Grid();
+        Image exitImage = new Image();
+        exitImage.Source = "thirdbttn.png";
+        exitImage.WidthRequest = 130;
+
+        Button exitButton = new Button();
+        exitButton.Text = "Выйти";
+        exitButton.WidthRequest = 130;
+
+        exitGrid.Add(exitButton);
+        exitGrid.Add(exitImage);
         // Создайте Grid для размещения ProgressBar по центру
         var grid = new Grid();
         grid.WidthRequest = 600;
         grid.HeightRequest = 50;
-        grid.Children.Add(label);
+        grid.Children.Add(labelProgressBarProcent);
         grid.Children.Add(progressBar);
+        grid.Children.Add(exitGrid);
 
         // Установите выравнивание по центру
         grid.HorizontalOptions = LayoutOptions.Center;
@@ -46,18 +62,8 @@ public partial class InstallationPage : ContentPage
 
         // Добавьте grid на вашу страницу (например, MainPage)
         Content = grid;
-        Task.Run(() => progressBarTextUpdate(label, progressBar));
     }
-    private void progressBarTextUpdate(Label label, ProgressBar progressBar)
-    {
-        while (true)
-        {
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                label.Text = progressBar.Progress.ToString();
-            });
-        }
-    }
+
     private void ExtractAndCopyFiles(string relativeZipFilePath, string relativeDestinationFolderPath)
     {
         // Получаем текущую директорию пsроекта
@@ -89,8 +95,20 @@ public partial class InstallationPage : ContentPage
             ZipFile.ExtractToDirectory(zipFilePath, tempFolderPath);
 
             // Проходимся по всем файлам во временной папке и копируем их в папку назначения
-            foreach (string filePath in Directory.GetFiles(tempFolderPath, "*", SearchOption.AllDirectories))
+            var allFilesTempFolder = Directory.GetFiles(tempFolderPath, "*", SearchOption.AllDirectories);
+            int tempFolderFilesCount = allFilesTempFolder.Count();
+            int counter = 0;
+            foreach (string filePath in allFilesTempFolder)
             {
+                counter += 1;
+                double shareReadiness = counter / tempFolderFilesCount;
+                double shareReadinessRounded = Math.Round(shareReadiness, 1);
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    progressBar.Progress = shareReadinessRounded;
+                    labelProgressBarProcent.Text = (shareReadiness * 100).ToString() + "%";
+                });
+
                 // Определяем относительный путь файла от временной папки
                 string relativePath = filePath.Substring(tempFolderPath.Length + 1);
                 // Формируем полный путь к файлу в папке назначения
@@ -105,9 +123,7 @@ public partial class InstallationPage : ContentPage
 
                 // Копируем файл во временной папке в папку назначения
                 System.IO.File.Copy(filePath, destinationPath, true);
-                Debug.Write(destinationDir);
-                Debug.Write(destinationPath);
-                CreateShortcut(@"%USERPROFILE%\Desktop\GallowGame.lnk", destinationDir + @"\GallowGame.exe"); //Путь к новому ярлыку с name.lnk / путь к ИСПОЛНЯЕМОМУ файлу
+                CreateShortcut(@"%USERPROFILE%\Desktop\GallowsGame.lnk", destinationDir + @"\GallowsGame.exe"); //Путь к новому ярлыку с name.lnk / путь к ИСПОЛНЯЕМОМУ файлу
             }
         }
         finally
