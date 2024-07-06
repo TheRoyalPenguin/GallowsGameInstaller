@@ -15,7 +15,8 @@ public partial class InstallationPage : ContentPage
         ProgressBarInit();
         if (!string.IsNullOrEmpty(path))
         {
-            ExtractAndCopyFiles(@"D:\CSProjects\GallowsGameInstaller\GallowsGameInstaller\ProjectBuildFiles\GallowGame.zip", path);
+            //ExtractAndCopyFiles(@"D:\CSProjects\GallowsGameInstaller\GallowsGameInstaller\ProjectBuildFiles\GallowGame.zip", path);            
+            ExtractAndCopyFiles(Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\Desktop\GallowGame.zip"), path);
         }
     }
     public InstallationPage()
@@ -23,7 +24,7 @@ public partial class InstallationPage : ContentPage
         InitializeComponent();
         NavigationPage.SetHasBackButton(this, false); //убирает дефолтную кнопку возвращения на предыдущую страницу
         ProgressBarInit();
-        ExtractAndCopyFiles(@"D:\CSProjects\GallowsGameInstaller\GallowsGameInstaller\ProjectBuildFiles\GallowGame.zip", @"C:\Program Files\GallowGame");
+        ExtractAndCopyFiles(Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\Desktop\GallowGame.zip"), @"C:\Program Files\GallowGame");
     }
     private void ProgressBarInit()
     {
