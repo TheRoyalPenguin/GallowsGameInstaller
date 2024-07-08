@@ -24,7 +24,7 @@ public partial class InstallationPage : ContentPage
         InitializeComponent();
         NavigationPage.SetHasBackButton(this, false); //убирает дефолтную кнопку возвращения на предыдущую страницу
         ProgressBarInit();
-        ExtractAndCopyFiles(Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\Desktop\GallowGame.zip"), @"C:\Program Files\GallowGame");
+        ExtractAndCopyFiles(Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\Desktop\GallowGame.zip"), @"C:\Desktop\GallowGame");
     }
     private void ProgressBarInit()
     {
@@ -32,7 +32,8 @@ public partial class InstallationPage : ContentPage
         progressBar = new ProgressBar
         {
             Progress = 0.5, // Установите начальное значение прогресса (0.5 для 50%)
-            ProgressColor = Colors.Blue // Установите цвет прогресс-бара (например, синий)
+            WidthRequest = 600,
+            ProgressColor = Colors.Navy // Установите цвет прогресс-бара (например, синий)
         };
         labelProgressBarProcent = new Label();
         labelProgressBarProcent.Text = "0%";
@@ -44,7 +45,10 @@ public partial class InstallationPage : ContentPage
         exitImage.WidthRequest = 130;
 
         Button exitButton = new Button();
-        exitButton.Text = "Выйти";
+        exitButton.Background = Colors.Transparent;
+        exitButton.Text = "Готово";
+        exitButton.TextColor = Colors.Navy;
+        exitButton.FontFamily = "Maki-Sans";
         exitButton.WidthRequest = 130;
 
         exitGrid.Add(exitButton);

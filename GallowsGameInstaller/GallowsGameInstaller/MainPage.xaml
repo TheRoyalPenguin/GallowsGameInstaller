@@ -32,9 +32,12 @@
                 <Button
                 x:Name="InstallButton"
                 Text="Установить"
+                FontSize="24"
+                FontFamily="Maki-Sans"
                 Clicked="OnInstallClicked"
                 Background="Transparent"
                 HorizontalOptions="Center"
+                TextColor="Navy"
                 WidthRequest="230"
                 HeightRequest="50"
                 CornerRadius="80"/>
@@ -46,10 +49,13 @@
                 <Button
                 x:Name="InstallAdvanceButton"
                 Text="Расширенная установка"
+                FontFamily="Maki-Sans"
+                TextColor="Navy"
                 Clicked="OnInstallAdvanceClicked"
                 Background="Transparent"
                 HorizontalOptions="Center"
                 WidthRequest="250"
+                FontSize="15"
                 HeightRequest="60"
                 CornerRadius="100"/>
             </Grid>
@@ -59,7 +65,10 @@
                 WidthRequest="130"/>
                 <Button
                 x:Name="ExitButton"
+                FontFamily="Maki-Sans"
                 Text="Выйти"
+                TextColor="Navy"
+                FontSize="24"
                 Clicked="OnExitClicked"
                 Background="Transparent"
                 HorizontalOptions="Center"

@@ -57,6 +57,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\folder.png" />
 	  <None Remove="Resources\Images\start scene.png" />
 	</ItemGroup>
 

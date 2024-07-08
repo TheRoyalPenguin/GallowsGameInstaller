@@ -18,22 +18,26 @@
             Source="inroductory_line.png"
             WidthRequest="400"/>
                 <Entry TextColor="Black"
+                       FontSize="16"
                        Placeholder="Введите путь установки..."
                        MaximumWidthRequest="400"
                        x:Name="PathEntry"/>
-                <Image Source="letter_button.png"
+                <Image Source="folder.png"
                        WidthRequest="50"
                        Margin="350,0,0,0"/>
                 <Button WidthRequest="50"
-                        Margin="350,0,0,0"
-                        Clicked="PathSelectClicked"/>
+                     Margin="350,0,0,0"
+                     BackgroundColor="Transparent"
+                     Clicked="PathSelectClicked">
+                </Button>
             </Grid>
             <Grid>
-                <Image Source="firstbttn.png"
-                       WidthRequest="200"/>
                 <Button
                 x:Name="InstallButton"
                 Text="Установить"
+                 FontSize ="26"
+                FontFamily="Maki-Sans"
+                TextColor="Navy"
                 Clicked="InstallClicked"
                 Background="Transparent"
                 HorizontalOptions="Center"
