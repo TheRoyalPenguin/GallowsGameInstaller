@@ -11,7 +11,7 @@
             Grid.Row="1"
             VerticalOptions="Center"
             HorizontalOptions="Center"
-            Margin="0,20,50,0"
+            Margin="0,13,50,0"
             Spacing="10">
             <Grid>
                 <Image
@@ -28,22 +28,24 @@
                 <Button WidthRequest="50"
                      Margin="350,0,0,0"
                      BackgroundColor="Transparent"
+                        CornerRadius="100"
                      Clicked="PathSelectClicked">
                 </Button>
             </Grid>
-            <Grid>
+            <Grid WidthRequest="225">
+                <Image Source="firstbttn.png"/>
                 <Button
                 x:Name="InstallButton"
                 Text="Установить"
-                 FontSize ="26"
+                FontSize ="26"
                 FontFamily="Maki-Sans"
                 TextColor="Navy"
                 Clicked="InstallClicked"
                 Background="Transparent"
                 HorizontalOptions="Center"
-                WidthRequest="400"
-                HeightRequest="50"
-                CornerRadius="80"/>
+                WidthRequest="225"
+                HeightRequest="65"
+                CornerRadius="100"/>
             </Grid>
         </VerticalStackLayout>
     </Grid>

@@ -57,6 +57,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Classes\**" />
+	  <Compile Remove="Classes\**" />
+	  <EmbeddedResource Remove="Classes\**" />
+	  <MauiCss Remove="Classes\**" />
+	  <MauiXaml Remove="Classes\**" />
+	  <None Remove="Classes\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Images\folder.png" />
 	  <None Remove="Resources\Images\start scene.png" />
 	</ItemGroup>
@@ -90,10 +99,6 @@
 	  <MauiXaml Update="Pages\InstallationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Classes\" />
 	</ItemGroup>
 
 	<ItemGroup>

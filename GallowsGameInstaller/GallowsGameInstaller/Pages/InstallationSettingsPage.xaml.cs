@@ -36,7 +36,10 @@ public partial class InstallationSettingsPage : ContentPage
     private async void InstallClicked(object sender, EventArgs e)
     {
         string path = PathEntry.Text;
-        await Navigation.PushAsync(new InstallationPage(path));
+        if (!string.IsNullOrEmpty(path))
+        {
+            await Navigation.PushAsync(new InstallationPage(path));
+        }
     }
 
 }

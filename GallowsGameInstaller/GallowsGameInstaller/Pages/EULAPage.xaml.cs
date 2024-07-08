@@ -1,5 +1,3 @@
-using CommunityToolkit.Maui.Storage;
-
 namespace GallowsGameInstaller.Pages;
 
 public partial class EULAPage : ContentPage
