@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.IO.Compression;
+using System.Reflection;
 using CommunityToolkit.Maui.Storage;
 using IWshRuntimeLibrary;
 
@@ -11,6 +12,7 @@ public partial class InstallationPage : ContentPage
     ProgressBar progressBar;
     private string shortcutPath = Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\Desktop\GallowsGame.lnk");    
     private string desktopPath = Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\Desktop");
+    private string projectBuildArchivePath = "";
     public InstallationPage(string path)
     {
         InitializeComponent();
@@ -18,7 +20,7 @@ public partial class InstallationPage : ContentPage
         if (!string.IsNullOrEmpty(path))
         {
             //ExtractAndCopyFiles(@"D:\CSProjects\GallowsGameInstaller\GallowsGameInstaller\ProjectBuildFiles\GallowGame.zip", path);            
-            ExtractAndCopyFiles(desktopPath + @"\GallowsGame.zip", path);
+            ExtractAndCopyFiles(GetBuildZipPath(), path);
         }
     }
     public InstallationPage()
@@ -26,7 +28,7 @@ public partial class InstallationPage : ContentPage
         InitializeComponent();
         NavigationPage.SetHasBackButton(this, false); //убирает дефолтную кнопку возвращения на предыдущую страницу
         ProgressBarInit();
-        ExtractAndCopyFiles(desktopPath + @"\GallowsGame.zip", desktopPath + @"\GallowsGame");
+        ExtractAndCopyFiles(GetBuildZipPath(), desktopPath + @"\GallowsGame");
     }
     private void ProgressBarInit()
     {
@@ -189,6 +191,18 @@ public partial class InstallationPage : ContentPage
         shortcut.TargetPath = targetPath;
         shortcut.Save();
     }
+
+    public static string GetBuildZipPath()
+    {
+        // Получаем путь к каталогу с исполняемым файлом
+        var baseDirectory = AppContext.BaseDirectory;
+
+        // Формируем полный путь к файлу GallowsGame.zip
+        var buildZipPath = Path.Combine(baseDirectory, "ProjectBuildFiles", "GallowsGame.zip");
+
+        return buildZipPath;
+    }
+
 
     private void OnExitButtonClicked(object sender, EventArgs e)
     {
